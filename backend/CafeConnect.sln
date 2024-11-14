@@ -1,0 +1,46 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CafeConnect.Api", "CafeConnect.Api\CafeConnect.Api.csproj", "{D2396182-BBA2-4C10-AC98-42558555C688}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CafeConnect.Application", "CafeConnect.Application\CafeConnect.Application.csproj", "{5F69AFDF-8724-4EB4-8C55-73005EBA28EF}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CafeConnect.Domain", "CafeConnect.Domain\CafeConnect.Domain.csproj", "{709588B0-6D69-44D7-8A04-DB0344CDA010}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CafeConnect.Infrastructure", "CafeConnect.Infrastructure\CafeConnect.Infrastructure.csproj", "{9C89A9A0-8287-4C1A-BF4E-983D16116EF9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CafeConnect.Tests", "CafeConnect.Tests\CafeConnect.Tests.csproj", "{4A3FFB32-3C5F-4AA6-B193-1E65F4CCBBFC}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D2396182-BBA2-4C10-AC98-42558555C688}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D2396182-BBA2-4C10-AC98-42558555C688}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D2396182-BBA2-4C10-AC98-42558555C688}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D2396182-BBA2-4C10-AC98-42558555C688}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5F69AFDF-8724-4EB4-8C55-73005EBA28EF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5F69AFDF-8724-4EB4-8C55-73005EBA28EF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5F69AFDF-8724-4EB4-8C55-73005EBA28EF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5F69AFDF-8724-4EB4-8C55-73005EBA28EF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{709588B0-6D69-44D7-8A04-DB0344CDA010}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{709588B0-6D69-44D7-8A04-DB0344CDA010}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{709588B0-6D69-44D7-8A04-DB0344CDA010}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{709588B0-6D69-44D7-8A04-DB0344CDA010}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C89A9A0-8287-4C1A-BF4E-983D16116EF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C89A9A0-8287-4C1A-BF4E-983D16116EF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C89A9A0-8287-4C1A-BF4E-983D16116EF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C89A9A0-8287-4C1A-BF4E-983D16116EF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A3FFB32-3C5F-4AA6-B193-1E65F4CCBBFC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A3FFB32-3C5F-4AA6-B193-1E65F4CCBBFC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A3FFB32-3C5F-4AA6-B193-1E65F4CCBBFC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A3FFB32-3C5F-4AA6-B193-1E65F4CCBBFC}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal

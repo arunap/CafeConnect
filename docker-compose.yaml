@@ -1,0 +1,47 @@
+name: cafe-mgt-system
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: cafe-mysql-db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: cafe_connect_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: user_password
+    ports:
+      - "6000:3306"
+    healthcheck:
+      test: mysqladmin ping -h 127.0.0.1 -p 6000 -u $$MYSQL_USER --password=$$MYSQL_PASSWORD | grep -q 'mysqld is alive'
+      interval: 10s
+      retries: 5
+      start_period: 30s
+      timeout: 5s
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - cafe-connect-network
+
+  cafe-api:
+      container_name: cafe-api
+      image: cafe-api:latest
+      build:
+        context: .
+        dockerfile: backend/CafeConnect.Api/Dockerfile
+      depends_on:
+        mysql:
+          condition: service_healthy
+      ports:
+        - "6200:8080"
+      environment:
+        - ASPNETCORE_ENVIRONMENT=Development
+        - ConnectionStrings__DefaultConnection=Server=cafe-mysql-db;Database=cafe_connect_db;User=user;Password=user_password;
+      networks:
+        - cafe-connect-network
+
+volumes:
+  mysql_data:
+
+networks:
+  cafe-connect-network:
+    driver: bridge
