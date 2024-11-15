@@ -91,7 +91,16 @@ operations.
 
 ## Appendix
 
-<kbd><img src="./assets/swagger_api_docs.jpg" style="width:1200px" /></kbd> <kbd><img src="./assets/docker_containers.jpg" style="width:1200px"/></kbd>
-<kbd><img src="./assets/cafe_list.jpg" style="width:1200px"/></kbd> <kbd><img src="./assets/cafe_add.jpg" style="width:1200px"/></kbd>
-<kbd><img src="./assets/cafe_update.jpg" style="width:1200px"/></kbd> <kbd><img src="./assets/cafe_view.jpg" style="width:1200px"/></kbd>
+<kbd><img src="./assets/swagger_api_docs.jpg" style="width:1200px" /></kbd>
+
+<kbd><img src="./assets/docker_containers.jpg" style="width:1200px"/></kbd>
+
+<kbd><img src="./assets/cafe_list.jpg" style="width:1200px"/></kbd>
+
+<kbd><img src="./assets/cafe_add.jpg" style="width:1200px"/></kbd>
+
+<kbd><img src="./assets/cafe_update.jpg" style="width:1200px"/></kbd>
+
+<kbd><img src="./assets/cafe_view.jpg" style="width:1200px"/></kbd>
+
 <kbd><img src="./assets/employee_list.jpg" style="width:1200px"/></kbd>
