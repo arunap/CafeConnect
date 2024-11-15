@@ -61,5 +61,7 @@ namespace CafeConnect.Infrastructure.Repositories
 
             await _context.SaveChangesAsync();
         }
+
+         public async Task<bool> EmployeesExistsAsync() => await _context.Employees.AnyAsync();
     }
 }

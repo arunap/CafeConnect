@@ -38,11 +38,11 @@ namespace CafeConnect.Infrastructure.EntityConfigurations
                 .IsRowVersion()
                 .IsRequired();
 
-            builder
-                .HasOne(e => e.Cafe)
-                .WithMany(e => e.Employees)
-                .HasForeignKey(e => e.CafeId)
-                .OnDelete(DeleteBehavior.NoAction);
+            // builder
+            //     .HasOne(e => e.Cafe)
+            //     .WithMany(e => e.Employees)
+            //     .HasForeignKey(e => e.CafeId)
+            //     .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

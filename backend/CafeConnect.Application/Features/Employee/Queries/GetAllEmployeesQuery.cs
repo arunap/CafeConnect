@@ -27,24 +27,21 @@ namespace CafeConnect.Application.Features.Employee.Queries
 
             // get employees by cafe
             var filteredCafeIds = cafes.Select(c => c.Id).ToList();
-            var employees = await _employeeRepository.GetAllAsync(emp => filteredCafeIds.Any(x => x == emp.CafeId));
+            var employees = await _employeeRepository.GetAllAsync(emp => string.IsNullOrEmpty(request.CafeName) || filteredCafeIds.Contains(emp.CafeId.Value));
 
-            var query = from employee in employees
-                        join cafe in cafes on employee.CafeId equals cafe.Id into cafeGroup
-                        from cafe in cafeGroup.DefaultIfEmpty()
-                        select new EmployeesByCafeNameDto
-                        {
-                            EmployeeId = employee.Id,
-                            Name = employee.Name,
-                            EmailAddress = employee.EmailAddress,
-                            Gender = employee.Gender,
-                            PhoneNumber = employee.PhoneNumber,
-                            DaysWorked = cafe == null ? 0 : (DateTime.Today - employee.StartedAt).Days,
-                            CafeName = cafe?.Name
-                        };
+            var query = employees.Select(employee =>
+                          new EmployeesByCafeNameDto
+                          {
+                              EmployeeId = employee.Id,
+                              Name = employee.Name,
+                              EmailAddress = employee.EmailAddress,
+                              Gender = employee.Gender,
+                              PhoneNumber = employee.PhoneNumber,
+                              DaysWorked = !cafes.Any(c => c.Id == employee.CafeId) ? 0 : (DateTime.Today - employee.StartedAt).Days,
+                              CafeName = cafes.SingleOrDefault(c => c.Id == employee.CafeId)?.Name
+                          }).OrderByDescending(e => e.DaysWorked);
 
-            var entities = query.ToList();
-            return entities.OrderByDescending(e => e.DaysWorked);
+            return query.ToList();
         }
     }
 }

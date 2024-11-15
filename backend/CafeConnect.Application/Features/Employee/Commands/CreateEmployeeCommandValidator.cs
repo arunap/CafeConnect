@@ -9,7 +9,7 @@ namespace CafeConnect.Application.Features.Employee.Commands
             // Name validation
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Name is required.")
-                .MaximumLength(100).WithMessage("Name cannot exceed 100 characters.");
+                .Length(6, 10).WithMessage("Name must be between 6 and 10 characters.");
 
             // EmailAddress validation
             RuleFor(x => x.EmailAddress)

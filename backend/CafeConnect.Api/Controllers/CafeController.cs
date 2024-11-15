@@ -1,8 +1,11 @@
+using System.Reflection;
 using CafeConnect.Application.Features.Cafe.Commands;
 using CafeConnect.Application.Features.Cafe.Dtos;
 using CafeConnect.Application.Features.Cafe.Queries;
+using log4net;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace CafeConnect.Api.Controllers
 {
@@ -11,7 +14,7 @@ namespace CafeConnect.Api.Controllers
     public class CafeController : ControllerBase
     {
         private readonly IMediator _mediator;
-
+        private static readonly ILog _logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
         public CafeController(IMediator mediator) => _mediator = mediator;
 
         // GET: api/Cafe/{id}
@@ -47,11 +50,21 @@ namespace CafeConnect.Api.Controllers
         [HttpPut("Cafe/{id}")]
         public async Task<IActionResult> PutCafe(Guid id, [FromForm] UpdateCafeCommand command)
         {
-            if (id != command.Id) return BadRequest();
+            try
+            {
+                if (id != command.Id) return BadRequest();
 
-            await _mediator.Send(command);
+                await _mediator.Send(command);
 
-            return NoContent();
+                return NoContent();
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                _logger.Warn("Concurrency exception occurred. Data may have been modified by another user.");
+
+                // Inform the user to reload data
+                return Conflict("The data has been updated by another user. Please reload the data.");
+            }
         }
 
 

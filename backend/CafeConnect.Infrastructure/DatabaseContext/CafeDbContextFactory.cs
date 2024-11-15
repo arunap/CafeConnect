@@ -16,8 +16,8 @@ namespace CafeConnect.Infrastructure.DatabaseContext
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
             var optionsBuilder = new DbContextOptionsBuilder<CafeDbContext>();
-            optionsBuilder.UseSqlServer(
-                    connectionString,
+            optionsBuilder.UseMySql(
+                    connectionString, ServerVersion.AutoDetect(connectionString),
                     builder => builder.MigrationsAssembly(typeof(CafeDbContext).Assembly.FullName));
 
             return new CafeDbContext(optionsBuilder.Options);

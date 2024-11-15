@@ -10,5 +10,7 @@ namespace CafeConnect.Domain.Repositories
         public Task UpdateAsync(Cafe entity);
         public Task<List<Cafe>> GetAllAsync(Expression<Func<Cafe, bool>>? filter = null);
         public Task<Cafe?> GetByIdAsync(Guid id);
+
+        public Task<bool> CafesExistsAsync();
     }
 }

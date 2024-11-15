@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations.Schema;
+
 namespace CafeConnect.Domain.Entities
 {
     public class CafeHistory : BaseEntity<Guid>
@@ -10,6 +12,7 @@ namespace CafeConnect.Domain.Entities
         public DateTime CreatedAt { get; private set; } = DateTime.Now;
 
         // navigation properties
+        [NotMapped]
         public ICollection<EmployeeHistory> Employees { get; set; } = [];
     }
 }

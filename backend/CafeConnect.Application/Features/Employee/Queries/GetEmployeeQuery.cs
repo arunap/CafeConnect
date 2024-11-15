@@ -23,7 +23,7 @@ namespace CafeConnect.Application.Features.Employee.Queries
         public async Task<EmployeeDto> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
         {
             var employee = await _employeeRepository.GetByIdAsync(request.Id);
-            var cafe = employee == null ? null : await _cafeRepository.GetByIdAsync(employee.CafeId.Value);
+            var cafe = employee != null && employee.CafeId.HasValue? await _cafeRepository.GetByIdAsync(employee.CafeId.Value):  null;
 
             var item = new EmployeeDto
             {

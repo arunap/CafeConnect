@@ -25,15 +25,15 @@ namespace CafeConnect.Application.Features.Cafe.Queries
         public async Task<IEnumerable<CafesByLocationDto>> Handle(GetAllCafesQuery request, CancellationToken cancellationToken)
         {
             // get cafes by location
-            var cafes = await _cafeRepository.GetAllAsync(cafe => string.IsNullOrEmpty(request.Location) || cafe.Name == request.Location);
+            var cafes = await _cafeRepository.GetAllAsync(cafe => string.IsNullOrEmpty(request.Location) || cafe.Location.Contains(request.Location));
 
             // get employees by cafe
-            var filteredCafeIds = cafes.Select(c => c.Id).ToList();
-            var employees = await _employeeRepository.GetAllAsync(emp => filteredCafeIds.Any(x => x == emp.CafeId));
+            var filteredCafeIds = cafes.Select(c => c.Id).Where(c => c != Guid.Empty).ToList();
+            var employees = await _employeeRepository.GetAllAsync(emp => filteredCafeIds.Contains(emp.CafeId.Value));
 
             // get image info
             var filteredImageIds = cafes.Select(c => c.LogoId).ToList();
-            var imageInfors = await _imageUploadRepository.GetAllAsync(imageUpload => filteredImageIds.Any(x => x == imageUpload.Id));
+            var imageInfors = await _imageUploadRepository.GetAllAsync(imageUpload => filteredImageIds.Contains(imageUpload.Id));
 
             var query = cafes.Select(cafe => new CafesByLocationDto
             {

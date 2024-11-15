@@ -4,6 +4,7 @@ using CafeConnect.Infrastructure.DatabaseContext;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Hosting;
 
 namespace CafeConnect.Infrastructure.Repositories
 {
@@ -11,12 +12,14 @@ namespace CafeConnect.Infrastructure.Repositories
     {
         private readonly CafeDbContext _context;
         private readonly string _fileUploadPath;
+        private readonly string _imageUploadPath;
 
-        public ImageUploadRepository(CafeDbContext context, IConfiguration configuration)
+        public ImageUploadRepository(CafeDbContext context, IConfiguration configuration, IHostEnvironment hostEnvironment)
         {
             _context = context;
 
-            _fileUploadPath = configuration["ImageUploadPath"] ?? Path.Combine(Directory.GetCurrentDirectory(), "Uploads");
+            _imageUploadPath = configuration["ImageUploadPath"] ?? "Uploads\\Images";
+            _fileUploadPath = Path.Combine(hostEnvironment.ContentRootPath, "wwwroot", _imageUploadPath);
             Directory.CreateDirectory(_fileUploadPath);
         }
 
@@ -33,6 +36,7 @@ namespace CafeConnect.Infrastructure.Repositories
 
             string fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
             string filePath = Path.Combine(_fileUploadPath, fileName);
+            string serverImgPath = Path.Combine(_imageUploadPath, fileName);
 
             using (var stream = new FileStream(filePath, FileMode.Create))
             {
@@ -45,7 +49,7 @@ namespace CafeConnect.Infrastructure.Repositories
                 Id = newId,
                 ContentType = file.ContentType,
                 FileName = file.FileName,
-                FilePath = filePath,
+                FilePath = serverImgPath,
                 FileSize = file.Length / 1024,
                 UploadedAt = DateTime.Now
             });

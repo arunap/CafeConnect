@@ -8,8 +8,6 @@ namespace CafeConnect.Application.Features.Cafe.Commands
     {
         public string Name { get; set; } = null!;
         public string Description { get; set; } = null!;
-
-        [Microsoft.AspNetCore.Mvc.FromForm]
         public IFormFile? Logo { get; set; } = null;
         public string Location { get; set; } = null!;
     }

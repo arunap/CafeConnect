@@ -10,5 +10,6 @@ namespace CafeConnect.Domain.Repositories
         public Task UpdateAsync(Employee entity);
         public Task<List<Employee>> GetAllAsync(Expression<Func<Employee, bool>>? filter = null);
         public Task<Employee?> GetByIdAsync(string id);
+        public Task<bool> EmployeesExistsAsync();
     }
 }

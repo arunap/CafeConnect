@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using CafeConnect.Domain.Enums;
 
 namespace CafeConnect.Domain.Entities
@@ -14,7 +15,7 @@ namespace CafeConnect.Domain.Entities
 
 
         // navigation properties
+        [NotMapped]
         public Guid? CafeId { get; set; }
-        public CafeHistory Cafe { get; set; }
     }
 }

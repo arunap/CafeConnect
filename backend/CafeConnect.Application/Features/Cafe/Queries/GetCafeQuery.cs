@@ -25,13 +25,14 @@ namespace CafeConnect.Application.Features.Cafe.Queries
             var item = await _cafeRepository.GetByIdAsync(request.CafeId);
             if (item == null) return null;
 
+            var imgPath = item.LogoId.HasValue ? (await _imageUploadRepository.GetByIdAsync(item.LogoId.Value)).FilePath : string.Empty;
             return new CafeDto
             {
                 CafeId = item.Id,
                 Name = item.Name,
                 Description = item.Description,
                 Location = item.Location,
-                LogoPath = (await _imageUploadRepository.GetByIdAsync(item.LogoId.Value))?.FilePath ?? string.Empty,
+                LogoPath = imgPath,
             };
         }
     }

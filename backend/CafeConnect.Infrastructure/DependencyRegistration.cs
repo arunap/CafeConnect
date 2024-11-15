@@ -1,6 +1,7 @@
 using CafeConnect.Domain.Repositories;
 using CafeConnect.Infrastructure.DatabaseContext;
 using CafeConnect.Infrastructure.Repositories;
+using CafeConnect.Infrastructure.Seeds;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Design;
 using Microsoft.Extensions.Configuration;
@@ -17,26 +18,29 @@ namespace CafeConnect.Infrastructure
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IImageUploadRepository, ImageUploadRepository>();
 
-            // serviceCollection.AddScoped<IDateTimeProvider, DateTimeProvider>();
+            services.AddScoped<CafeDataInitializer>();
+            services.AddScoped<EmployeeDataInitializer>();
 
-            // database initial data initializer registration
-            // serviceCollection.AddScoped<CafeDataInitializer>();
-            // serviceCollection.AddScoped<EmployeeDataInitializer>();
-
-
-            // get connectionstring
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
-            // Configure shared CafeManagementDbContext
             services.AddDbContext<CafeDbContext>(
-                options => options.UseSqlServer(connectionString,
+                options => options.UseMySql(connectionString, ServerVersion.AutoDetect(connectionString),
                 builder => builder.MigrationsAssembly(typeof(CafeDbContext).Assembly.FullName)
             ));
 
-            //  serviceCollection.AddScoped<ICafeDbContext>(provider => provider.GetRequiredService<CafeDbContext>());
             services.AddSingleton<IDesignTimeDbContextFactory<CafeDbContext>, CafeDbContextFactory>();
 
             return services;
+        }
+
+        public static async Task SeedAsync(this IServiceProvider serviceProvider)
+        {
+            using var sp = serviceProvider.CreateScope();
+            var cafeSeeds = sp.ServiceProvider.GetRequiredService<CafeDataInitializer>();
+            await cafeSeeds.SeedAsync();
+
+            var employeeSeeds = sp.ServiceProvider.GetRequiredService<EmployeeDataInitializer>();
+            await employeeSeeds.SeedAsync();
         }
     }
 }

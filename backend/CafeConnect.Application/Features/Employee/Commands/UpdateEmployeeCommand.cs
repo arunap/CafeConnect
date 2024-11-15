@@ -6,7 +6,7 @@ namespace CafeConnect.Application.Features.Employee.Commands
 {
     public class UpdateEmployeeCommand : IRequest
     {
-        public string Id { get; set; }
+        public string EmployeeId { get; set; }
         public Guid? CafeId { get; set; }
         public string Name { get; set; }
         public string EmailAddress { get; set; }
@@ -27,7 +27,7 @@ namespace CafeConnect.Application.Features.Employee.Commands
         {
             var employee = new Domain.Entities.Employee
             {
-                Id = request.Id,
+                Id = request.EmployeeId,
                 EmailAddress = request.EmailAddress,
                 PhoneNumber = request.PhoneNumber,
                 Gender = request.Gender,

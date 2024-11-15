@@ -23,36 +23,50 @@ namespace CafeConnect.Infrastructure.Repositories
 
         public async Task DeleteAsync(Cafe entity)
         {
-            var item = await _context.Cafes.FirstOrDefaultAsync(c => c.Id == entity.Id) ?? throw new ItemNotFoundException(nameof(entity), entity.Id);
-
-            var employees = await _context.Employees.Where(emp => emp.CafeId == entity.Id).ToListAsync();
-
-            _context.Employees.RemoveRange(employees);
-            _context.Cafes.Remove(entity);
-
-            // move to history tables
-            await _context.CafeHistories.AddAsync(new CafeHistory
+            using var transaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                Id = Guid.NewGuid(),
-                CafeId = entity.Id,
-                Name = entity.Name,
-                Description = entity.Description,
-                Location = entity.Location,
-                LogoId = entity.LogoId,
-                Employees = employees.Select(emp => new EmployeeHistory
+                var item = await _context.Cafes.FirstOrDefaultAsync(c => c.Id == entity.Id) ?? throw new ItemNotFoundException(nameof(entity), entity.Id);
+
+                var employees = await _context.Employees.Where(emp => emp.CafeId == entity.Id).ToListAsync();
+
+                _context.Employees.RemoveRange(employees);
+                await _context.SaveChangesAsync();
+
+                _context.Cafes.Remove(item);
+                await _context.SaveChangesAsync();
+
+                // move to history tables
+                await _context.CafeHistories.AddAsync(new CafeHistory
                 {
                     Id = Guid.NewGuid(),
-                    EmployeeId = emp.Id,
-                    CafeId = emp.CafeId,
-                    Name = emp.Name,
-                    EmailAddress = emp.EmailAddress,
-                    PhoneNumber = emp.PhoneNumber,
-                    Gender = emp.Gender,
-                    StartedAt = emp.StartedAt,
-                }).ToList()
-            });
+                    CafeId = item.Id,
+                    Name = item.Name,
+                    Description = item.Description,
+                    Location = item.Location,
+                    LogoId = item.LogoId,
+                    Employees = employees.Select(emp => new EmployeeHistory
+                    {
+                        Id = Guid.NewGuid(),
+                        EmployeeId = emp.Id,
+                        CafeId = item.Id,
+                        Name = emp.Name,
+                        EmailAddress = emp.EmailAddress,
+                        PhoneNumber = emp.PhoneNumber,
+                        Gender = emp.Gender,
+                        StartedAt = emp.StartedAt,
+                    }).ToList()
+                });
 
-            await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync();
+
+                await transaction.CommitAsync();
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
 
         public async Task<List<Cafe>> GetAllAsync(Expression<Func<Cafe, bool>>? filter = null) => (filter == null) ?
@@ -71,5 +85,7 @@ namespace CafeConnect.Infrastructure.Repositories
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task<bool> CafesExistsAsync() => await _context.Cafes.AnyAsync();
     }
 }

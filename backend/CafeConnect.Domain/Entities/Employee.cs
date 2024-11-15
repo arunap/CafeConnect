@@ -8,7 +8,7 @@ namespace CafeConnect.Domain.Entities
         public string EmailAddress { get; set; } = string.Empty;
         public int PhoneNumber { get; set; }
         public GenderType Gender { get; set; } = GenderType.Male;
-        public DateTime StartedAt { get; } = DateTime.Now;
+        public DateTime StartedAt { get; set; } = DateTime.Now;
 
 
         // navigation properties

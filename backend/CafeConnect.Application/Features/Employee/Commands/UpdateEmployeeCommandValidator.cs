@@ -6,12 +6,12 @@ namespace CafeConnect.Application.Features.Employee.Commands
     {
         public UpdateEmployeeCommandValidator()
         {
-            RuleFor(x => x.Id)
+            RuleFor(x => x.EmployeeId)
                 .NotEmpty().WithMessage("Employee ID is required.");
 
             RuleFor(x => x.Name)
                 .NotEmpty().WithMessage("Name is required.")
-                .MaximumLength(100).WithMessage("Name must not exceed 100 characters.");
+                .Length(6, 10).WithMessage("Name must be between 6 and 10 characters.");
 
             RuleFor(x => x.EmailAddress)
                 .NotEmpty().WithMessage("Email address is required.")

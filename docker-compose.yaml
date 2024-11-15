@@ -22,6 +22,23 @@ services:
     networks:
       - cafe-connect-network
 
+  frontend:
+      container_name: cafe-frontend
+      image: cafe-frontend:latest
+      build:
+        context: ./frontend
+        dockerfile: Dockerfile
+      depends_on:
+        - cafe-api
+      ports:
+        - "3000:3000"
+      environment:
+        - NODE_ENV=production
+      stdin_open: true
+      tty: true
+      networks:
+          - cafe-connect-network
+
   cafe-api:
       container_name: cafe-api
       image: cafe-api:latest
