@@ -7,10 +7,8 @@ using CafeConnect.Infrastructure;
 using CafeConnect.Infrastructure.DatabaseContext;
 using log4net;
 using log4net.Config;
-using log4net.Core;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
