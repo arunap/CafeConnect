@@ -23,7 +23,7 @@ namespace CafeConnect.Application.Features.Employee.Queries
         public async Task<EmployeeDto> Handle(GetEmployeeQuery request, CancellationToken cancellationToken)
         {
             var employee = await _employeeRepository.GetByIdAsync(request.Id);
-            var cafe = employee != null && employee.CafeId.HasValue? await _cafeRepository.GetByIdAsync(employee.CafeId.Value):  null;
+            var cafe = employee != null && employee.CafeId.HasValue ? await _cafeRepository.GetByIdAsync(employee.CafeId.Value) : null;
 
             var item = new EmployeeDto
             {
@@ -33,7 +33,8 @@ namespace CafeConnect.Application.Features.Employee.Queries
                 Gender = employee.Gender,
                 PhoneNumber = employee.PhoneNumber,
                 CafeId = cafe?.Id,
-                CafeName = cafe?.Name
+                CafeName = cafe?.Name,
+                StartedAt = employee.StartedAt,
             };
 
             return item;

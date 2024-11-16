@@ -39,7 +39,6 @@ export const updateCafe = async ({ id, data }) => {
 };
 
 export const deleteCafe = async (id) => {
-  debugger;
   const response = await axiosPublic.delete(`/cafe/${id}`);
 
   if (response.status !== 204) throw new Error(`Failed to delete cafe`);

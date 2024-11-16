@@ -20,7 +20,7 @@ const ServerErrors = () => {
         <Typography variant="body1" color="textSecondary" sx={{ mb: 3 }}>
           {detailed || "An unexpected error has occurred. Please try again later."}
         </Typography>
-        <Button variant="contained" color="primary" onClick={() => navigate({ to: "/" })}>
+        <Button variant="contained" color="primary" onClick={() => navigate("/cafes")}>
           GO TO HOME
         </Button>
       </Box>

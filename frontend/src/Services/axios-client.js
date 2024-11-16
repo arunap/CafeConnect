@@ -11,7 +11,6 @@ export const axiosPublic = axios.create({
 axiosPublic.interceptors.request.use(
   (config) => config,
   (error) => {
-    debugger;
     return Promise.reject(error);
   }
 );
@@ -19,10 +18,13 @@ axiosPublic.interceptors.request.use(
 axiosPublic.interceptors.response.use(
   (response) => response,
   (error) => {
-    const errorMessage = error.response?.data?.Detailed || error.message || "An error occurred";
-    window.location.href = `/servererror?detailed=${encodeURIComponent(errorMessage)}`;
-    console.log(error);
+    if (error.response && error.response.status === 500) {
+      const errorMessage = error.response?.data?.Detailed || error.message || "An error occurred";
+      window.location.href = `/servererror?detailed=${encodeURIComponent(errorMessage)}`;
+      return Promise.reject(error);
+    }
 
-    return Promise.reject(error);
+    console.log(error.response?.data?.errors.toString());
+    return Promise.reject(error.response?.data?.errors.toString());
   }
 );

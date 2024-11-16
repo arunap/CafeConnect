@@ -42,7 +42,7 @@ const CafeList = () => {
     setEntityId(null);
     setEntityType("");
 
-    queryClient.invalidateQueries({ queryKey: ["cafesByLocation"] });
+    //queryClient.invalidateQueries({ queryKey: ["cafesByLocation"] });
   };
 
   const handleDeleteConfirmed = async () => {

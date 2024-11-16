@@ -9,9 +9,7 @@ export const createEmployee = async (newEmployee) => {
 };
 
 export const updateEmployee = async ({ data }) => {
-  debugger;
   const { id, data: formData } = data;
-  //console.log(x);
   const response = await axiosPublic.put(`/employee/${id}`, formData);
 
   if (response.status !== 204) throw new Error("Failed to update Employee");

@@ -11,5 +11,6 @@ namespace CafeConnect.Application.Features.Employee.Dtos
         public GenderType Gender { get; set; }
         public Guid? CafeId { get; set; }
         public string? CafeName { get; internal set; }
+        public DateTime StartedAt { get; set; }
     }
 }

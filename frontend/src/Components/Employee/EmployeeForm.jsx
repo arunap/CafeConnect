@@ -11,7 +11,12 @@ const EmployeeForm = ({ employeeId, employeeItem, cafeData, onSuccess, isLoading
   const navigate = useNavigate();
 
   const isEdit = !!employeeId;
-  const { control, handleSubmit, reset } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    formState: { isDirty },
+  } = useForm({
     defaultValues: employeeItem || { name: "", emailAddress: "", phoneNumber: "", cafeId: "0", gender: "Male" },
   });
 
@@ -21,6 +26,7 @@ const EmployeeForm = ({ employeeId, employeeItem, cafeData, onSuccess, isLoading
     if (isEdit) onSuccess({ id: employeeId, data });
     else onSuccess(data);
   };
+
   return (
     <Box sx={{ maxWidth: 400, mx: "auto", mt: 4 }}>
       <Typography variant="h5" gutterBottom>

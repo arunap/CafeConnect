@@ -38,7 +38,8 @@ namespace CafeConnect.Application.Features.Employee.Queries
                               Gender = employee.Gender,
                               PhoneNumber = employee.PhoneNumber,
                               DaysWorked = !cafes.Any(c => c.Id == employee.CafeId) ? 0 : (DateTime.Today - employee.StartedAt).Days,
-                              CafeName = cafes.SingleOrDefault(c => c.Id == employee.CafeId)?.Name
+                              CafeName = cafes.SingleOrDefault(c => c.Id == employee.CafeId)?.Name,
+                              StartedAt = employee.StartedAt,
                           }).OrderByDescending(e => e.DaysWorked);
 
             return query.ToList();

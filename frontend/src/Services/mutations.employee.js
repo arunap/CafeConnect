@@ -13,7 +13,7 @@ export const useCreateEmployeeFn = () => {
     },
     onError: (error) => {
       console.log(error);
-      dispatch(showNotification({ message: "Error registering employee.", severity: "error", duration: 3000 }));
+      dispatch(showNotification({ message: error || "Error registering employee.", severity: "error", duration: 3000 }));
     },
   });
 };
@@ -28,7 +28,7 @@ export const useUpdateEmployeeFn = () => {
     },
     onError: (error) => {
       console.log(error);
-      dispatch(showNotification({ message: "Error updating Employee.", severity: "error", duration: 3000 }));
+      dispatch(showNotification({ message: error || "Error updating Employee.", severity: "error", duration: 3000 }));
     },
   });
 };
@@ -39,7 +39,7 @@ export const useDeleteEmployeeFn = () => {
   return useMutation({
     mutationFn: (id) => deleteEmployee(id),
     onSuccess: () => dispatch(showNotification({ message: `Employee deleted successfully!`, severity: "success", duration: 3000 })),
-    onError: (error) => dispatch(showNotification({ message: `Error deleting employee.`, severity: "error", duration: 3000 })),
+    onError: (error) => dispatch(showNotification({ message: error || `Error deleting employee.`, severity: "error", duration: 3000 })),
     onSettled: () => queryClient.invalidateQueries({ queryKey: ["employees"] }),
   });
 };

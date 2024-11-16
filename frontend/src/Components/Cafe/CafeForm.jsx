@@ -26,7 +26,6 @@ const CafeForm = ({ cafeId, cafeItem, onSuccess }) => {
   }, [cafeItem, reset]);
 
   const onSubmit = async (cafeData) => {
-    debugger;
     const formData = new FormData();
 
     Object.keys(cafeData).forEach(function (key) {

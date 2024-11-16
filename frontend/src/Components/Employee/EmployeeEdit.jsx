@@ -29,10 +29,11 @@ const EmployeeEdit = () => {
   // Handle errors
   if (cafeError || employeeError) return <div>Error fetching data.</div>;
 
-  const savedCafe = cafeData.filter((x) => x.name === employeeData.cafeName)[0];
-  const employeeItem = { cafeId: savedCafe == null ? "-1" : savedCafe["id"], ...employeeData };
+console.log("runing......!")
+  // const savedCafe = cafeData.filter((x) => x.name === employeeData.cafeName)[0];
+  // const employeeItem = { cafeId: savedCafe == null ? "-1" : savedCafe["id"], ...employeeData };
 
-  return <EmployeeForm employeeId={employeeId} employeeItem={employeeItem} cafeData={cafeData} isLoading={isCafeLoading || isEmployeeLoading} onSuccess={onUpdateHandler} />;
+  return <EmployeeForm employeeId={employeeId} employeeItem={employeeData} cafeData={cafeData} isLoading={isCafeLoading || isEmployeeLoading} onSuccess={onUpdateHandler} />;
 };
 
 export default EmployeeEdit;

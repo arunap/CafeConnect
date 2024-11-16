@@ -46,6 +46,17 @@ const CafeDetails = () => {
     { headerName: "Name", field: "name", sortable: true, filter: true, flex: 1 },
     { headerName: "Email", field: "emailAddress", sortable: true, filter: true, flex: 1 },
     { headerName: "Phone Number", field: "phoneNumber", sortable: true, filter: true, flex: 1 },
+    {
+      headerName: "Start Date",
+      field: "startedAt",
+      sortable: true,
+      filter: true,
+      flex: 1,
+      valueFormatter: (params) => {
+        const date = new Date(params.value);
+        return date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
+      },
+    },
     { headerName: "Days Worked", field: "daysWorked", sortable: true, filter: true, flex: 1 },
     { headerName: "Café Name", field: "cafeName", sortable: true, filter: true, flex: 1 },
   ];
