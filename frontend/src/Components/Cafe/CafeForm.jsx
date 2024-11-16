@@ -16,10 +16,10 @@ const CafeForm = ({ cafeId, cafeItem, onSuccess }) => {
   const [fileName, setFileName] = useState(null);
 
   const handleFileChange = (e) => {
+    setValue("logo", e.target.files[0]);
     if (e.target.files[0]) {
       setFile(e.target.files[0]);
       setFileName(e.target.files[0].name);
-      setValue("logo", e.target.files[0]);
     }
   };
 
@@ -97,7 +97,7 @@ const CafeForm = ({ cafeId, cafeItem, onSuccess }) => {
               control={control}
               rules={{
                 validate: {
-                  lessThan2MB: (file) => file?.size <= 2 * 1024 * 1024 || "File size should be less than 2MB",
+                  lessThan2MB: (file) => !file || file?.size <= 2 * 1024 * 1024 || "File size should be less than 2MB",
                 },
               }}
               render={({ field }) => <Input type="file" onChange={handleFileChange} accept="image/*" />}
