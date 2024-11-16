@@ -18,7 +18,7 @@ namespace CafeConnect.Infrastructure.Repositories
         {
             _context = context;
 
-            _imageUploadPath = configuration["ImageUploadPath"] ?? "Uploads\\Images";
+            _imageUploadPath = configuration["ImageUploadPath"] ?? "Uploads/Images";
             _fileUploadPath = Path.Combine(hostEnvironment.ContentRootPath, "wwwroot", _imageUploadPath);
             Directory.CreateDirectory(_fileUploadPath);
         }

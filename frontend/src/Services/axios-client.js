@@ -19,9 +19,9 @@ axiosPublic.interceptors.response.use(
   (response) => response,
   (error) => {
     if (error.response && error.response.status === 500) {
-      const errorMessage = error.response?.data?.Detailed || error.message || "An error occurred";
+      const errorMessage = error.response?.data?.message || error.message || "An error occurred";
       window.location.href = `/servererror?detailed=${encodeURIComponent(errorMessage)}`;
-      return Promise.reject(error);
+      return Promise.reject(errorMessage);
     }
 
     console.log(error.response?.data?.errors.toString());

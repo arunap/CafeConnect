@@ -1,6 +1,8 @@
+using System.Net;
 using System.Reflection;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using CafeConnect.Api.Dtos;
 using CafeConnect.Api.Middleware;
 using CafeConnect.Application;
 using CafeConnect.Infrastructure;
@@ -26,7 +28,12 @@ builder.Services.AddControllers()
         options.InvalidModelStateResponseFactory = context =>
         {
             var errors = context.ModelState.Where(m => m.Value.Errors.Count > 0).SelectMany(x => x.Value.Errors).Select(x => x.ErrorMessage);
-            var response = new { Success = false, Message = "Validation errors occurred", Errors = errors };
+            var response = new ErrorDto
+            {
+                StatusCode = (int)HttpStatusCode.BadRequest,
+                Message = "Validation errors occurred",
+                Errors = errors.ToArray(),
+            };
             return new BadRequestObjectResult(response);
         };
     })

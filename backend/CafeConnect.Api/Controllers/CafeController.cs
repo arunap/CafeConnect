@@ -50,23 +50,12 @@ namespace CafeConnect.Api.Controllers
         [HttpPut("Cafe/{id}")]
         public async Task<IActionResult> PutCafe(Guid id, [FromForm] UpdateCafeCommand command)
         {
-            try
-            {
-                if (id != command.Id) return BadRequest();
+            if (id != command.Id) return BadRequest();
 
-                await _mediator.Send(command);
+            await _mediator.Send(command);
 
-                return NoContent();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                _logger.Warn("Concurrency exception occurred. Data may have been modified by another user.");
-
-                // Inform the user to reload data
-                return Conflict("The data has been updated by another user. Please reload the data.");
-            }
+            return NoContent();
         }
-
 
         // DELETE: api/Cafe/{id}
         [HttpDelete("Cafe/{id}")]

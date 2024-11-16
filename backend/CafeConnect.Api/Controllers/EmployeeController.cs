@@ -14,8 +14,6 @@ namespace CafeConnect.Api.Controllers
     public class EmployeeController : ControllerBase
     {
         private readonly IMediator _mediator;
-        private static readonly ILog _logger = LogManager.GetLogger(MethodBase.GetCurrentMethod()?.DeclaringType);
-
         public EmployeeController(IMediator mediator) => _mediator = mediator;
 
         // GET: api/Employee/{id}
@@ -51,23 +49,12 @@ namespace CafeConnect.Api.Controllers
         [HttpPut("Employee/{id}")]
         public async Task<IActionResult> PutEmployee(string id, UpdateEmployeeCommand command)
         {
-            try
-            {
-                if (id != command.EmployeeId) return BadRequest();
+            if (id != command.EmployeeId) return BadRequest();
 
-                await _mediator.Send(command);
+            await _mediator.Send(command);
 
-                return NoContent();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                _logger.Warn("Concurrency exception occurred. Data may have been modified by another user.");
-
-                // Inform the user to reload data
-                return Conflict("The data has been updated by another user. Please reload the data.");
-            }
+            return NoContent();
         }
-
 
         // DELETE: api/Employee/{id}
         [HttpDelete("Employee/{id}")]
