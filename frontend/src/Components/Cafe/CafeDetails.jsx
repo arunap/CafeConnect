@@ -22,8 +22,6 @@ const CafeDetails = () => {
   const { data: cafeItem } = useGetCafeByCafeIdQuery(cafeId, true);
   const { data: employeeData, error, isLoading } = useGetEmployeesQuery(cafe);
 
-  console.log(cafeItem);
-
   const columnDefs = [
     {
       headerName: "Photo",
