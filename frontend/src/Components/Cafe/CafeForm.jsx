@@ -5,19 +5,31 @@ import ReusableTextbox from "./../../Shared/ReusableTextbox";
 import { useForm, Controller } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { BASE_IMAGE_URL } from "../../Constants";
+import { useDispatch } from "react-redux";
 
 const CafeForm = ({ cafeId, cafeItem, onSuccess }) => {
   const navigate = useNavigate();
   const isEdit = cafeId !== undefined;
+  const dispatch = useDispatch();
 
   const [file, setFile] = useState(null);
   const [fileName, setFileName] = useState(null);
+
   const handleFileChange = (e) => {
-    setFile(e.target.files[0]);
-    setFileName(e.target.files[0].name);
+    if (e.target.files[0]) {
+      setFile(e.target.files[0]);
+      setFileName(e.target.files[0].name);
+      setValue("logo", e.target.files[0]);
+    }
   };
 
-  const { control, handleSubmit, reset } = useForm({
+  const {
+    control,
+    handleSubmit,
+    reset,
+    setValue,
+    formState: { errors },
+  } = useForm({
     defaultValues: cafeItem || { name: "", description: "", logo: "", location: "" },
   });
 
@@ -33,7 +45,7 @@ const CafeForm = ({ cafeId, cafeItem, onSuccess }) => {
     });
 
     if (isEdit) formData.append("id", cafeId);
-    if (file && fileName) formData.append("logo", file);
+    // if (file && fileName) formData.append("logo", file);
 
     onSuccess(formData);
   };
@@ -80,10 +92,18 @@ const CafeForm = ({ cafeId, cafeItem, onSuccess }) => {
           {/* Image Upload Field */}
           <FormControl fullWidth style={{ marginTop: "20px" }}>
             {/* <FormLabel>Upload Profile Picture</FormLabel> */}
-            <Controller name="logo" control={control} render={({ field }) => <Input type="file" onChange={handleFileChange} inputProps={{ accept: "image/*" }} />} />
+            <Controller
+              name="logo"
+              control={control}
+              rules={{
+                validate: {
+                  lessThan2MB: (file) => file?.size <= 2 * 1024 * 1024 || "File size should be less than 2MB",
+                },
+              }}
+              render={({ field }) => <Input type="file" onChange={handleFileChange} accept="image/*" />}
+            />
           </FormControl>
-          {/* <FormLabel>Upload Profile Picture</FormLabel>
-        <input type="file" onChange={handleFileChange} /> */}
+          {errors.logo && <p style={{ color: "#d32f2f", paddingLeft: "10px", fontSize: "0.75rem" }}>{errors.logo.message}</p>}
 
           {/* Location Field */}
           <ReusableTextbox

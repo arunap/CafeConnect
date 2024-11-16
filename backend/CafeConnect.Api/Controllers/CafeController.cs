@@ -5,7 +5,6 @@ using CafeConnect.Application.Features.Cafe.Queries;
 using log4net;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CafeConnect.Api.Controllers
 {

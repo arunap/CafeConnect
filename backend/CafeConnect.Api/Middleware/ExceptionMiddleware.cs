@@ -2,6 +2,7 @@ using System.Net;
 using System.Reflection;
 using System.Text.Json;
 using CafeConnect.Api.Dtos;
+using CafeConnect.Domain.Exceptions;
 using log4net;
 using Microsoft.EntityFrameworkCore;
 
@@ -26,6 +27,10 @@ namespace CafeConnect.Api.Middleware
                 // Proceed to the next middleware in the pipeline
                 await _next(context);
             }
+            catch (FileUploadException ex)
+            {
+                await HandleFileUploadExceptionAsync(context, ex);
+            }
             catch (DbUpdateConcurrencyException ex)
             {
                 await HandleConcurencyAsync(context, ex);
@@ -35,6 +40,25 @@ namespace CafeConnect.Api.Middleware
                 // Handle the exception
                 await HandleExceptionAsync(context, ex);
             }
+        }
+
+        private static Task HandleFileUploadExceptionAsync(HttpContext context, FileUploadException exception)
+        {
+            _logger.Error("Error in image uploading.", exception);
+
+            context.Response.StatusCode = (int)HttpStatusCode.BadRequest;
+            context.Response.ContentType = "application/json";
+
+            // Create a response object with error details
+            var response = new ErrorDto
+            {
+                StatusCode = context.Response.StatusCode,
+                Message = "Error in image uploading.",
+                Errors = [exception.Message]
+            };
+
+            var responseJson = JsonSerializer.Serialize(response, JSON_OPTIONS);
+            return context.Response.WriteAsync(responseJson);
         }
 
         private static Task HandleConcurencyAsync(HttpContext context, DbUpdateConcurrencyException exception)

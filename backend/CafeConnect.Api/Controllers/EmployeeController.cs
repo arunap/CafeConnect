@@ -1,11 +1,8 @@
-using System.Reflection;
 using CafeConnect.Application.Features.Employee.Commands;
 using CafeConnect.Application.Features.Employee.Dtos;
 using CafeConnect.Application.Features.Employee.Queries;
-using log4net;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace CafeConnect.Api.Controllers
 {

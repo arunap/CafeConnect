@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using CafeConnect.Domain.Exceptions;
 using CafeConnect.Domain.Repositories;
 using CafeConnect.Infrastructure.DatabaseContext;
 using Microsoft.AspNetCore.Http;
@@ -32,7 +33,9 @@ namespace CafeConnect.Infrastructure.Repositories
 
         public async Task<Guid> UploadFileAsync(IFormFile file)
         {
-            if (file == null || file.Length == 0) throw new ArgumentException("Invalid file");
+            if (file == null || file.Length == 0) throw new FileUploadException("Invalid file");
+
+            if (file.Length > 2 * 1024 * 1024) throw new FileUploadException("File size should be less than 2MB");
 
             string fileName = Guid.NewGuid() + Path.GetExtension(file.FileName);
             string filePath = Path.Combine(_fileUploadPath, fileName);
