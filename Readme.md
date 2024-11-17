@@ -82,7 +82,7 @@ operations.
 
 1. Navigate to the frontend directory:
    ```
-   cd backend/CafeConnect.Api
+   cd backend
    ```
 2. Install required npm dependencies:
    ```
